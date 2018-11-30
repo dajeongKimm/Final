@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--  namespace 속서은 현재 xml 파일을 나타내는 id와 같은 정보 -->
+<mapper namespace="com.tje.model.VisitMapper">
+
+	<!-- 방문기록 추가하기 -->
+	<insert id="visitInsert" parameterType="visit">
+		insert into visit
+		(member_id, restaurant_id, url)
+		values (#{member_id},#{restaurant_id},#{url})
+	</insert>
+	
+	<!-- 방문한곳 읽기-->
+	<select id="visitSelect" parameterType="visitview" resultType="visitview">
+		select * from visit_view 
+		where member_id = #{member_id}
+		group by restaurant_id
+		order by visit_id desc
+		limit 0,5
+	</select>
+	
+</mapper>

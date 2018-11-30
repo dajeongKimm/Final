@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+	<typeAliases>
+		<!--  멤버 -->
+		<typeAlias type="com.tje.model.Member" alias="member"/>
+		<typeAlias type="com.tje.model.Member_address" alias="member_address"/>
+		
+		<!-- 음식점 -->
+		<typeAlias type="com.tje.model.RestaurantListView" alias="restaurantListView"/>
+		<typeAlias type="com.tje.model.DetailRestaurantView" alias="detailRestaurantView"/>
+		<typeAlias type="com.tje.model.MapCoordinate" alias="mapCoordinate"/>
+		<typeAlias type="com.tje.model.MenuList" alias="menuList"/>
+		<typeAlias type="com.tje.model.RestaurantReadCount" alias="restaurantReadCount"/>
+		<typeAlias type="com.tje.model.FilterView" alias="filterview"/>
+		<typeAlias type="com.tje.model.SearchRank" alias="searchRank"/>
+		
+		<!-- 방문했던 페이지 -->
+		<typeAlias type="com.tje.model.Visit" alias="visit"/>
+		<typeAlias type="com.tje.model.VisitView" alias="visitview"/>
+		
+		<!--  리뷰 -->
+		<typeAlias type="com.tje.model.SimpleReview" alias="simpleReview"/>
+		<typeAlias type="com.tje.model.SimpleReviewLike" alias="simpleReviewLike"/>
+		<typeAlias type="com.tje.model.SimpleReviewNotify" alias="simpleReviewNotify"/>
+		<typeAlias type="com.tje.model.SimpleReviewScore" alias="simpleReviewScore"/>
+		<typeAlias type="com.tje.model.ReviewListView" alias="reviewList"/>
+		<typeAlias type="com.tje.model.SimpleReviewFile" alias="simpleReviewFile"/>
+		
+		
+		<!-- 전체 리뷰 -->
+		
+	</typeAliases>
+</configuration>

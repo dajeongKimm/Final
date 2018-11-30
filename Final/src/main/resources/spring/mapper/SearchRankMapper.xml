@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--  namespace 속서은 현재 xml 파일을 나타내는 id와 같은 정보 -->
+<mapper namespace="com.tje.model.SearchRankMapper">
+
+	<!-- 검색어 추가하기 -->
+	<insert id="searchRankInsert" parameterType="searchRank">
+		insert into searchRank
+		(keyword, count)
+		values (#{keyword},#{count})
+	</insert>
+	
+	<!-- 기존의 검색어가 있는지 확인해보기 -->
+	<select id="checkKeyword" parameterType="searchRank" resultType="searchRank">
+		select * from searchRank
+		where keyword = #{keyword}
+	</select>
+	
+	<!-- count 증가시키기 -->
+	<update id="updateCount" parameterType="searchRank">
+		update searchRank
+		set count = count + 1
+		where keyword = #{keyword}
+	</update>
+	
+	<!-- 검색어 순위 별로 정렬하기-->
+	<select id="searchRankSelect" resultType="searchRank">
+		select * from searchRank 
+		order by count desc
+		limit 0,5
+	</select>
+	
+</mapper>

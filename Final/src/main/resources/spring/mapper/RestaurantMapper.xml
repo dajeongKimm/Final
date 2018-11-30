@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--  namespace 속서은 현재 xml 파일을 나타내는 id와 같은 정보 -->
+<mapper namespace="com.tje.model.RestaurantMapper">
+
+	<!-- 음식점 전체 컬럼수 -->
+	<select id="allRestaurantCount" resultType="int">
+		select count(*) from restaurant_list_view
+	</select>
+	
+	<!-- 페이징 처리시킨 음식점 전체  -->
+	<select id="restaurantList" parameterType="java.util.Map" resultType="restaurantListView">
+		select * from restaurant_list_view
+		limit #{startIdx}, #{count}
+	</select>
+	
+	
+	
+	
+	<!-- 상세 지도보기 -->
+	<select id="selectOneMap" parameterType="mapCoordinate" resultType="mapCoordinate">
+		select * from map_coordinate
+		where restaurant_id =#{restaurant_id}
+	</select>
+	
+	<!-- 해당 음식점의 메뉴 불러오기 -->
+	<select id="selectMenu" parameterType="menuList" resultType="menuList">
+		select * from menulist
+		where restaurant_id = #{restaurant_id}
+	</select>
+
+	<!-- 상세페이지 뷰를 통해 보기 -->
+	<select id="detailRestaurant" parameterType="detailRestaurantView"  resultType="detailRestaurantView">
+		select * from detail_restaurant_view
+		where restaurant_id = #{restaurant_id};
+	</select>
+	
+	
+	
+	
+	
+	<!-- 한식 전체 컬럼수 -->
+	<select id="allHansikCount" resultType="int">
+		select count(*) from restaurant_list_view
+		where menu_type='한식'
+	</select>
+	<!-- 한식리스트 분류 -->
+	<select id="hansik" parameterType="java.util.Map" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='한식'
+		limit #{startIdx}, #{count}
+	</select>
+	
+	<!-- 치킨/피자 전체 컬럼수 -->
+	<select id="allChikenAndPizzaCount" resultType="int">
+		select count(*) from restaurant_list_view
+		where menu_type='치킨/피자'
+	</select>
+	<!-- 치킨/피자 리스트 분류 -->
+	<select id="chikenAndPizza" parameterType="java.util.Map" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='치킨/피자'
+		limit #{startIdx}, #{count}
+	</select>
+	
+	<!-- 양식 전체 컬럼수 -->
+	<select id="allYangsikCount" resultType="int">
+		select count(*) from restaurant_list_view
+		where menu_type='양식'
+	</select>
+	<!-- 양식리스트 분류 -->
+	<select id="yangsik" parameterType="java.util.Map" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='양식'
+		limit #{startIdx}, #{count}
+	</select>
+	
+	<!-- 중식 전체 컬럼수 -->
+	<select id="allJungsikCount" resultType="int">
+		select count(*) from restaurant_list_view
+		where menu_type='중식'
+	</select>
+	<!-- 중식리스트 분류 -->
+	<select id="jungsik" parameterType="java.util.Map" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='중식'
+		limit #{startIdx}, #{count}
+	</select>
+	
+	<!-- 일식 전체 컬럼수 -->
+	<select id="allIlsikCount" resultType="int">
+		select count(*) from restaurant_list_view
+		where menu_type='일식'
+	</select>
+	<!-- 일식리스트 분류 -->
+	<select id="ilsik" parameterType="java.util.Map" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='일식'
+		limit #{startIdx}, #{count}
+	</select>
+	
+	<!-- 분식 전체 컬럼수 -->
+	<select id="allBunsikCount" resultType="int">
+		select count(*) from restaurant_list_view
+		where menu_type='분식'
+	</select>
+	<!-- 분식리스트 분류 -->
+	<select id="bunsik" parameterType="java.util.Map" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='분식'
+		limit #{startIdx}, #{count}
+	</select>
+	
+	<!-- 분식 전체 컬럼수 -->
+	<select id="allCafeCount" resultType="int">
+		select count(*) from restaurant_list_view
+		where menu_type='카페'
+	</select>
+	<!-- 디저트 리스트 분류 -->
+	<select id="cafe" parameterType="java.util.Map" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='카페'
+		limit #{startIdx}, #{count}
+	</select>
+	
+	
+	
+	
+	<!--  조회수 증가 -->
+	<update id="increaseCount" parameterType="restaurantReadCount">
+		update restaurant_readcount set read_count = read_count + 1
+		where restaurant_id = #{restaurant_id}
+	</update>
+	
+	
+	
+	<!-- 검색필터 -->
+	<select id="filter" parameterType="filterview" resultType="filterview">
+		select * from filter_view
+		<where> 
+			<!-- 음식종류 검사 -->
+			<if test= "menu_type != null">
+				menu_type = #{menu_type}
+			</if>
+			
+			<!-- 가격대 검사 -->
+			<if test = "menu_price == 1">
+				and 10000 > menu_price
+			</if>
+			<if test ="menu_price == 2">
+				and menu_price between 10000 and 19999
+			</if>
+			<if test ="menu_price == 3">
+				and menu_price between 20000 and 29999
+			</if>
+			<if test ="menu_price == 4">
+				and menu_price >= 30000
+			</if>
+			<if test ="menu_price == 5">
+				and menu_price >= 0
+			</if>
+			
+			<!-- 서비스 검사 -->
+			<if test="service_kidszon">
+				and service_kidszon = true
+			</if>
+			<if test="service_pet">
+				and service_pet = true
+			</if>
+			<if test="service_wipi">
+				and service_wipi = true
+			</if>
+			<if test="service_reservation">
+				and service_reservation = true
+			</if>
+			<if test="service_takeout">
+				and service_takeout = true
+			</if>
+			<if test="service_parking">
+				and service_parking = true
+			</if>
+			<if test="service_toilet">
+				and service_toilet = true
+			</if>
+			<if test="service_delivery">
+				and service_delivery = true
+			</if>
+			
+			<!-- 할인 -->
+			<if test="discount_coupon">
+				and discount_coupon = true
+			</if>
+			<if test="discount_mobile">
+				and discount_mobile = true
+			</if>
+			<if test="discount_savemoney">
+				and discount_savemoney = true
+			</if>	
+			
+			<!-- 중복된 음식점 1곳만 나오게 하기 -->
+			<if test = "menu_type != null || menu_price != null">
+				group by restaurant_id
+			</if>
+		</where>	
+	</select>
+	
+	<!-- 검색창 이용하기 -->
+	<!-- 
+	<select id="search" parameterType="java.util.Map" resultType="filterview">
+		select * from Filter_view
+		where restaurant_name like concat('%',#{keyword},'%')
+		group by restaurant_id
+		limit #{startIdx}, #{count};
+	</select>
+	 -->
+	<select id="search" parameterType="String" resultType="filterview">
+		select * from Filter_view
+		where restaurant_name like concat('%',#{keyword},'%')
+		group by restaurant_id;
+	</select>
+	
+	<!-- 검색창에서 나온 결과의 총 컬럼수 -->
+	<select id="searchCount" parameterType="String" resultType="int">
+		select count(c.restaurant_id) as cnt
+		from (
+		select restaurant_id, count(restaurant_id)  from Filter_view
+		where restaurant_name like concat('%',#{keyword},'%')
+		group by restaurant_id
+		) as c;
+	</select>
+</mapper>

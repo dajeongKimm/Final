@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--  namespace 속서은 현재 xml 파일을 나타내는 id와 같은 정보 -->
+<mapper namespace="com.tje.model.MemberMapper">
+
+	<!-- 회원가입 ID중복체크 -->
+	<select id="oneMember" parameterType="member" resultType="member">
+		select * from member where member_id = #{member_id}
+	</select>
+	<select id="CKnickName" parameterType="member" resultType="member">
+		select * from member where member_nickname = #{member_nickname}
+	</select>
+	
+	
+	<!-- 로그인 -->
+  	<select id="login" parameterType="member" resultType="member">
+		select *  from member where member_id =#{member_id} and member_password =#{member_password} 
+	</select>
+	
+	<insert id="insertAddress"  useGeneratedKeys="true" keyProperty="address_id"  parameterType="member_address" >
+		insert into member_address 
+		(address_city, address_gu, address_dong, address_detail, address_postcode )
+		values(#{address_city}, #{address_gu}, #{address_dong}, #{address_detail}, #{address_postcode})
+	</insert>
+
+	
+	<!-- 
+	<insert id="insertMember" parameterType="member" >
+		insert into Member
+		values(#{member_id},#{member_password},#{member_name},#{member_nickname},#{member_tel},#{member_address.address_id},#{member_email},
+				null, #{member_gender}, default, null, now())
+	</insert>
+	 -->
+	<insert id="insertMember" parameterType="member" >
+		insert into Member (`member_id`,`member_password`, `member_name`, `member_nickname`, `member_tel`, `member_address_id`, `member_email`, `member_birthday`, `member_gender`, `member_type`, `member_photo`, `member_registdate`)
+				select  
+					#{member_id} as `member_id`, 
+					#{member_password} as `member_password`, 
+					#{member_name} as `member_name`, 
+					#{member_nickname}as `member_nickname`,
+					#{member_tel} as `member_tel`,
+					#{member_address.address_id} as `member_address_id`,
+					#{member_email} as `member_email`,
+					str_to_date(#{member_birthday}, '%Y %m %d') as `member_birthday`,
+					#{member_gender} as `member_gender`,
+					0 as `member_type`,
+					#{member_photo} as `member_photo`,
+					now() as `member_registdate`
+	</insert>
+	
+</mapper>

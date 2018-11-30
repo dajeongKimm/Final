@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mybatis 사이트에 들어가서 퍼와야함 (!DOCTYPE configuration, mapper mapper를 가져와야 namespace오류안생김)-->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mybatis 사이트에 들어가서 퍼와야함 (!DOCTYPE configuration, mapper mapper를 가져와야 namespace오류안생김)-->
+
+
+<mapper namespace="MemberUpdateMapper">
+	
+	<update id="updatePW" parameterType="map">
+	update member set member_password=#{member_password} where member_id=#{member_id};
+	</update>
+	<select id="CKpassword"  parameterType="member" resultType="int">
+		select count(*) from member where member_id = #{member_id} and member_password =#{member_password}
+		
+	</select>
+	
+	<delete id="deleteMember" parameterType="member"    >
+		delete from member where member_id =#{member_id}
+	</delete>
+	
+	<delete id="deleteAddress"   parameterType="member_address"  >
+		delete from member_address where member_address_id =#{address_id}
+	</delete>
+</mapper>

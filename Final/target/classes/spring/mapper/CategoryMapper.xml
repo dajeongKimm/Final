@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--  namespace 속서은 현재 xml 파일을 나타내는 id와 같은 정보 -->
+<mapper namespace="com.tje.model.CategoryMapper">
+
+	<!-- 카테고리1. 검색 순위 베트스 5 -->
+	<select id="bestRanking5" resultType="restaurantListView">
+		select * from restaurant_list_view 
+		order by read_count desc
+		limit 0, 5
+	</select>
+	
+	<!-- 카테고리2. 평점 순위 베트스 5 -->
+	<select id="bestScore" resultType="restaurantListView">
+		select * from restaurant_list_view 
+		order by sum_score/allcount desc 
+		limit 0, 5;
+	</select>
+	
+	<!--  카테고리3. 리뷰가 많은 맛집 -->
+	<select id="bestReview" resultType="restaurantListView">
+		select * from Filter_view
+		group by restaurant_id
+		order by allcount desc
+		limit 0,5;
+	</select>
+	
+</mapper>

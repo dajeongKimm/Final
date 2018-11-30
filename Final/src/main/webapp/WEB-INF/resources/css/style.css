@@ -1,0 +1,259 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon');
+/* font-family: 'Do Hyeon', sans-serif; */
+/* layout */
+#header {
+	height: 25%;
+	background: url(../img/header_bg.jpg) repeat-x center top;
+	text-align: center;
+}
+
+
+#footer {
+	height: 20%;
+}
+/* container */
+.container {
+	width: 1200px;
+	margin: 0 auto;
+	background: rgba(0, 0, 0, 0, 2);
+}
+
+/* quick */
+.quick {
+	text-align: right;
+}
+
+.quick a {
+	color: #fff;
+	padding: 4px 0 4px 10px;
+	display: inline-block;
+	transition: color 0.3s ease;
+}
+
+.quick a:hover {
+	color: #ccc;
+}
+
+/* icon */
+.icon {
+	text-align: center;
+}
+
+.icon
+ 
+ul {
+	
+}
+
+.icon
+ 
+li {
+	display: inline;
+}
+
+.icon
+ 
+li
+ 
+a {
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	backgorund-color: #3192bf;
+	line-height: 80px;
+	color: #fff;
+	font-size: 35px;
+	border-radius: 50px;
+}
+
+.icon
+ 
+li
+ 
+a
+ 
+span {
+	position: absolute;
+	left: 0;
+	top: -40px;
+	font-size: 12px;
+}
+
+}
+
+/* foodtype */
+.foodtype {
+	text-align: center;
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+.foodtype
+ 
+ul {
+	list-style: none;
+	text-align: center;
+}
+
+.foodtype
+ 
+ul
+ 
+li {
+	display: inline;
+	padding: 20px;
+}
+
+.foodtype
+ 
+ul
+ 
+li
+ 
+a {
+	font-size: 30px;
+	color: #fff
+}
+
+
+/* footer */
+#footer {
+	width: 100%;
+	height: 250px;
+	background-color: gray;
+	text-align: center;
+	font-family: 'Do Hyeon', sans-serif;
+	color: #fff;
+}
+
+.footer-title {
+	text-align: center;
+	background-color: gray;
+}
+
+.footer-title
+ 
+h1
+ 
+a {
+	text-align: center;
+	margin-top: 70px;
+	color: #fff;
+}
+
+/* foodimg */
+#contents .container .foodimg tr td {
+	padding: 20px;
+}
+
+/* main-search-bar  */
+.main-search-bar {
+	text-align: center;
+	margin-top: 30px;
+}
+
+fieldset {
+	position: relative;
+	display: inline-block;
+	padding: 0 0 0 40px;
+	background: #fff;
+	border: none;
+	border-radius: 5px;
+}
+
+.main-search-bar input, .main-search-bar button {
+	position: relative;
+	width: 200px;
+	height: 50px;
+	padding: 0;
+	display: inline-block;
+	float: left;
+}
+
+.main-search-bar input {
+	color: #666;
+	z-index: 2;
+	border: 0 none;
+}
+
+.main-search-bar input:focus {
+	outline: 0 none;
+}
+
+.main-search-bar input:focus+button {
+	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0, 0);
+	transform: translate(0, 0);
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+.main-search-bar input:focus+button .fa {
+	-webkit-transform: translate(0px, 0);
+	-ms-transform: translate(0px, 0);
+	transform: translate(0px, 0);
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+	color: #fff;
+}
+
+.main-search-bar button {
+	z-index: 1;
+	width: 50px;
+	border: 0 none;
+	background: #ceb980;
+	cursor: pointer;
+	border-radius: 0 5px 5px 0;
+	-webkit-transform: translate(-50px, 0);
+	-ms-transform: translate(-50px, 0);
+	transform: translate(-50px, 0);
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+.main-search-bar .fa-search {
+	font-size: 20px;
+	color: #fff;
+	z-index: 3;
+	top: 25%;
+	-webkit-transform: translate(-190px, 0);
+	-ms-transform: translate(-190px, 0);
+	transform: translate(-190px, 0);
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+	-webkit-transition: all 0.1s ease-in-out;
+	transition: all 0.1s ease-in-out;
+}
+
+.filter{
+  	margin-bottom :30px;
+    font-size: 40px;
+    color: #fff;
+    padding-bottom: 10px;
+}
+
+/* 미디어쿼리 320/480/600/768/960/1024/1280 */
+@media ( max-width : 1280px) {
+	.container {
+		width: 100%;
+	}
+}
+
+@media ( max-width : 1024px) {
+}
+
+@media ( max-width : 960px) {
+}
+
+@media ( max-width : 768px) {
+}
+
+@media ( max-width : 600px) {
+}
+
+@media ( max-width : 480px) {
+}
+
+@media ( max-width : 320px) {
+}
