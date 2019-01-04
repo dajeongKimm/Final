@@ -34,8 +34,6 @@
 		
 		<!-- 전체 리뷰 -->
 		
-		<!--  test용 -->
-		<typeAlias type="com.tje.model.Article_test" alias="article"/>
 		
 		
 	</typeAliases>

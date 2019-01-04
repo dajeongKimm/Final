@@ -58,7 +58,10 @@ public class SimpleReviewRestController {
       simple.setSimpleReviewLike(like);
       simple.setSimpleReviewNotify(notify);
       simple.setSimpleReviewScore(score);
+      
       // file
+     SimpleReviewFile file = new SimpleReviewFile();
+     simple.setSimpleReviewFile(file);
       
       Map<String, Integer> map = new HashMap<>();
       map.put("total_score", review_score.getTotal_score());
