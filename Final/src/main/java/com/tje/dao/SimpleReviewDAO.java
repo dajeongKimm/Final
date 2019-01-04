@@ -23,6 +23,10 @@ public class SimpleReviewDAO {
 		return sqlSession.selectList(strNameSpace + ".selectSimpleReviewList", map);
 	}
 	
+	public List<ReviewListView> selectList(int restaurant_id) {
+		return sqlSession.selectList(strNameSpace + ".selectAllSimpleReview", restaurant_id);
+	}
+	
 	// 리뷰 1개 select
 	public SimpleReview select(int simple_review_id) {
 		return sqlSession.selectOne(strNameSpace + ".selectSimpleReview", simple_review_id);
@@ -115,25 +119,30 @@ public class SimpleReviewDAO {
 	}
 	
 	
-	
-	
 	// 좋아요
 	public int selectLikeCount(int simple_review_id) {
 		return sqlSession.selectOne(strNameSpace + ".getLikeCount", simple_review_id);
 	}
 	
 	public int addLikeCount(int simple_review_like_id) {
-		return sqlSession.insert(strNameSpace + ".addLikeCount", simple_review_like_id);
+		return sqlSession.update(strNameSpace + ".addLikeCount", simple_review_like_id);
+	}
+	
+	public int cancelLikeCount(int simple_review_like_id) {
+		return sqlSession.update(strNameSpace + ".cancelLikeCount", simple_review_like_id);
 	}
 	
 	
-	
 	// 싫어요
-		public int selectBadCount(int simple_review_id) {
-			return sqlSession.selectOne(strNameSpace + ".getBadCount", simple_review_id);
-		}
-		
-		public int addBadCount(int simple_review_notify_id) {
-			return sqlSession.insert(strNameSpace + ".addBadCount", simple_review_notify_id);
-		}
+	public int selectBadCount(int simple_review_id) {
+		return sqlSession.selectOne(strNameSpace + ".getBadCount", simple_review_id);
+	}
+	
+	public int addBadCount(int simple_review_notify_id) {
+		return sqlSession.update(strNameSpace + ".addBadCount", simple_review_notify_id);
+	}
+	
+	public int cancelBadCount(int simple_review_notify_id) {
+		return sqlSession.update(strNameSpace + ".cancelBadCount", simple_review_notify_id);
+	}
 }

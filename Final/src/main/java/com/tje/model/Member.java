@@ -3,9 +3,6 @@ package com.tje.model;
 import java.util.Date;
 
 public class Member {
-
-	
-	
 	
 	private String member_id;
 	private String member_password;

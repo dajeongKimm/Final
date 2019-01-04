@@ -29,9 +29,14 @@
 		<typeAlias type="com.tje.model.SimpleReviewScore" alias="simpleReviewScore"/>
 		<typeAlias type="com.tje.model.ReviewListView" alias="reviewList"/>
 		<typeAlias type="com.tje.model.SimpleReviewFile" alias="simpleReviewFile"/>
-		
+		<typeAlias type="com.tje.model.Search_helper" alias="helper"/>
+		 
 		
 		<!-- 전체 리뷰 -->
+		
+		<!--  test용 -->
+		<typeAlias type="com.tje.model.Article_test" alias="article"/>
+		
 		
 	</typeAliases>
 </configuration>

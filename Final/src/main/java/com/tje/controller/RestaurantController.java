@@ -142,7 +142,9 @@ public class RestaurantController {
 
 		model.addAttribute("allReviewCount", allCount);
 		model.addAttribute("SimpleReviewList", reviewService.selectList(map));
-
+		//처음엔 2개만 보여주기
+		//model.addAttribute("SimpleReviewList", reviewService.get_list(0));
+		
 		return "restaurant/restaurantInfo";
 	}
 

@@ -288,6 +288,9 @@ var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
    </div>
    
    <table class="table table-striped">
+   
+   	<tbody id ="tbody">
+   
       <tr>
          <td width="200px">${ reviewList.member_nickname }</td>
          <td colspan="2">${ reviewList.simple_review_registdate }</td>
@@ -368,10 +371,46 @@ var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
          </td>
       </tr>
       
+      </tbody>
+      
    </table>
    <br>
    </c:forEach>
 </div>
+
+<!-- 더보기 처리 ajax 시도
+<button onclick="add_list()">더보기</button>
+
+<script type="text/javascript">
+
+	var startIdx = 2; //초기값 2로 지정 (0,2) 다음 (2,2) 이기 때문에
+	
+	function add_list(){
+		
+		$.ajax({
+			type: 'POST',
+			url: '${pageContext.request.contextPath}/add/board',
+			data: {startIdx, startIdx},
+			success: function(result){
+				if(result.length != 0){
+					$('#tbody').append(result);
+					
+					startIdx += 2;
+				}else{
+					alert("더이상 게시글이 없습니다.");
+					return false;
+				}
+			}, 
+			error: function(){
+				alert("ajax 통신 에러");
+			}
+		});
+	}
+	
+
+</script>
+-->
+
 
 <!-- 페이징 처리 -->
 <div id="pasing" style="text-align: center">

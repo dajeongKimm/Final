@@ -38,13 +38,13 @@ public class MemberController {
 	}
 	
 	
-
-	
 	//회원가입 폼으로 이동
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
 	public String insertMemberForm() {
 		return "member/insertForm";
 	}
+	
+	
 	
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
 	public String insertMember(Model model, Member member) {
@@ -199,15 +199,4 @@ public class MemberController {
 		return "{\"value\" : \"" + msg + "\"}";
 		
 	} 
-	
-	
-//	// 채팅 
-//		@RequestMapping("/ws-echo")
-//		public String echo_ws(HttpSession session, HttpServletRequest request) {
-//			
-//			
-//			session = request.getSession(false);
-//			System.out.println("세션 정보 :"+session.getAttribute("loginmember"));
-//			return "chat/chattingview";
-//		}
 }

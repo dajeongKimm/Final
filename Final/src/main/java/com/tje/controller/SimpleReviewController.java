@@ -54,14 +54,13 @@ public class SimpleReviewController {
 		
 		int count = 0;
 		try{
-			count = reviewService.likeCount(simpleReview);
+			count = reviewService.addLikeCount(simpleReview);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		return "{\"value\" : \"" + count + "\"}";
 	}
-	
 	
 	@ResponseBody
 	@RequestMapping(value="badCount/{simple_review_id}", method=RequestMethod.POST)
@@ -70,7 +69,7 @@ public class SimpleReviewController {
 		
 		int count = 0;
 		try{
-			count = reviewService.badCount(simpleReview);
+			count = reviewService.addBadCount(simpleReview);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -85,6 +84,7 @@ public class SimpleReviewController {
 									@PathVariable int restaurant_id,
 									@RequestParam ArrayList<MultipartFile> simple_review_photo) {
 		//
+		System.out.println(realPath);
 		String member_id = simpleReview.getSimpleReviewScore().getMember_id();
 		
 		SimpleReviewLike like = new SimpleReviewLike();
@@ -104,6 +104,7 @@ public class SimpleReviewController {
 		score.setTotal_score(simpleReview.getSimpleReviewScore().getTotal_score());
 		
 		//
+		// null이면 파일 안들어가게
 		int fileSize = simple_review_photo.size();
 		int index = 1;
 		
@@ -114,7 +115,8 @@ public class SimpleReviewController {
 			file.setFile(mf);
 			
 			UUID uuid = UUID.randomUUID();
-			String file_name = uuid.toString() + "_" + mf.getOriginalFilename();
+			String Original = mf.getOriginalFilename().replaceAll(" ", "");
+			String file_name = uuid.toString() + "_" + Original;
 			
 			uploadService.saveFile(realPath, file, file_name);
 			
@@ -131,6 +133,7 @@ public class SimpleReviewController {
 		
 		SimpleReviewFile file = new SimpleReviewFile();
 		file.setFile_name(fileNames.toString());
+		
 		System.out.println(fileNames.toString());
 		//
 		SimpleReview simple = new SimpleReview();

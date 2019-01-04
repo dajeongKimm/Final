@@ -58,10 +58,41 @@ public class RestaurantService {
 		return this.dao.allCafeCount();
 	}
 
-	// 음식점 전체 리스트
+	// 음식점 전체 리스트(페이징 포함)
 	public List<RestaurantListView> selectRestaurant(Map<String, Integer> map) {
 		return this.dao.selectRestaurant(map);
 	}
+	////////////////////RestController ////////////////////////
+	// 음식점 전체 리스트(페이징 미포함)
+	public List<RestaurantListView> selectStore(){
+		return this.dao.selectStore();
+	}
+	//상세페이지 보기
+	public DetailRestaurantView selectOneStore(int restaurant_id) {
+		return this.dao.selectOneStore(restaurant_id);
+	}
+	//메뉴
+	public List<MenuList> selectStoreMenu(int restaurant_id) {
+		return this.dao.selectStoreMenu(restaurant_id);
+	}
+	//리뷰3개 보이기
+	public List<ReviewListView> selectIntroReview(int restaurant_id){
+		return this.dao.selectIntroReview(restaurant_id);
+	}
+	public int selectReviewCount(int restaurant_id) {
+		return this.dao.selectReviewCount(restaurant_id);
+	}
+	//조회수 증가
+	public int increaseStore(int restaurant_id) {
+		return this.dao.increaseStore(restaurant_id);
+	}
+	//검색 결과
+	public List<ReviewListView> searchStore(String keyword){
+		return this.dao.searchStore(keyword);
+	}
+	
+	///////////////////////////////////////////////////////////
+	
 
 	// 상세지도 보기
 	public MapCoordinate selectOneMap(MapCoordinate mapcoordinate) {

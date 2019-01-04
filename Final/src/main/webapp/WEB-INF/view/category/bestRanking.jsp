@@ -12,7 +12,7 @@
 <meta name="description" content="더조은 미슐랭: 테마별 맛집 추천 어플리케이션">
 <meta name="keywords" content="맛집, 맛집 추천">
 <meta name="robots" content="all">
-<title>검색 순위 Best 5</title>
+<title>조회수 순위 Best 5</title>
 
 <link rel="stylesheet" type = "text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
 <script type = "text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script> 
@@ -57,7 +57,7 @@
 	<div id="list">
 	
 	<table class="table table-hover">
-	<caption>검색 순위 Best 5</caption>
+	<caption>조회수 순위 Best 5</caption>
 	<c:forEach var="bestRank" items="${bestRanking}" varStatus="status">
 		<tr onmouseover="mouseOver('${bestRank.restaurant_name}', ${bestRank.map_coordinate_lat}, ${bestRank.map_coordinate_long})" 
 			onmouseout="mouseOut()">

@@ -57,7 +57,7 @@
 	<div id="list">
 	
 	<table class="table table-hover">
-	<caption>평점 순위 Best5</caption>
+	<caption>리뷰가 많은 순위 Best5</caption>
 	<c:forEach var="bestReview" items="${bestReview}" varStatus="status">
 		<tr onmouseover="mouseOver('${bestReview.restaurant_name}', ${bestReview.map_coordinate_lat}, ${bestReview.map_coordinate_long})" onmouseout="mouseOut()">
 			<td rowspan="2" width="10px">${status.count}</td>

@@ -24,36 +24,76 @@ public class RestaurantDAO {
 		return sqlSession.selectOne(strNameSpace + ".allRestaurantCount");
 	}
 
-	// 음식점 전체 보기
+	// 음식점 전체 보기 (페이징 처리 포함)
 	public List<RestaurantListView> selectRestaurant(Map<String, Integer> map) {
 		return sqlSession.selectList(strNameSpace + ".restaurantList", map);
 	}
 
+	////////// RestController ///////////////////
+	// 음식점 전체 보기 (페이징 처리 미포함)
+	public List<RestaurantListView> selectStore() {
+		return sqlSession.selectList(strNameSpace + ".selectStore");
+	}
+
+	// 상세
+	public DetailRestaurantView selectOneStore(int restaurant_id) {
+		return sqlSession.selectOne(strNameSpace + ".selectOneStore", restaurant_id);
+	}
+
+	// 메뉴
+	public List<MenuList> selectStoreMenu(int restaurant_id) {
+		return sqlSession.selectList(strNameSpace + ".selectStoreMenu", restaurant_id);
+	}
+
+	public List<ReviewListView> selectIntroReview(int restaurant_id) {
+		return sqlSession.selectList(strNameSpace + ".selectIntroReview", restaurant_id);
+	}
+	
+	public int selectReviewCount(int restaurant_id) {
+		return sqlSession.selectOne(strNameSpace + ".selectReviewCount", restaurant_id);
+	}
+	
+	// 조회수 증가
+	public int increaseStore(int restaurant_id) {
+		return sqlSession.update(strNameSpace + ".increaseStore", restaurant_id);
+	}
+	
+	//검색결과창
+	public List<ReviewListView> searchStore (String keyword){
+		return sqlSession.selectList(strNameSpace + ".searchStore", keyword);
+	}
+	/////////////////////////////////////////////
 
 	// 한식 총 컬럼수
 	public int allHansikCount() {
 		return sqlSession.selectOne(strNameSpace + ".allHansikCount");
 	}
+
 	// 치킨/피자 총 컬럼수
 	public int allChikenAndPizzaCount() {
 		return sqlSession.selectOne(strNameSpace + ".allChikenAndPizzaCount");
 	}
+
 	// 양식 총 컬럼수
 	public int allYangsikCount() {
 		return sqlSession.selectOne(strNameSpace + ".allYangsikCount");
 	}
+
 	// 중식 총 컬럼수
 	public int allJungsikCount() {
 		return sqlSession.selectOne(strNameSpace + ".allJungsikCount");
 	}
+
 	// 일식 총 컬럼수
 	public int allIlsikCount() {
 		return sqlSession.selectOne(strNameSpace + ".allIlsikCount");
 	}
+
 	// 분식점 총 컬럼수
 	public int allBunsikCount() {
 		return sqlSession.selectOne(strNameSpace + ".allBunsikCount");
 	}
+
 	// 디저트 컬럼수
 	public int allCafeCount() {
 		return sqlSession.selectOne(strNameSpace + ".allCafeCount");
@@ -108,23 +148,24 @@ public class RestaurantDAO {
 	public List<DetailRestaurantView> selectCafe(Map<String, Integer> map) {
 		return sqlSession.selectList(strNameSpace + ".cafe", map);
 	}
-	
-	//조회수 증가
+
+	// 조회수 증가
 	public int increaseCount(RestaurantReadCount restaurantReadCount) {
 		return sqlSession.update(strNameSpace + ".increaseCount", restaurantReadCount);
 	}
 	
-	
-	//검색필터
-	public List<FilterView> selectFilter(FilterView filterview){
+
+	// 검색필터
+	public List<FilterView> selectFilter(FilterView filterview) {
 		return sqlSession.selectList(strNameSpace + ".filter", filterview);
 	}
-	
-	//검색창
-	public List<FilterView> selectSearch(String keyword){
+
+	// 검색창
+	public List<FilterView> selectSearch(String keyword) {
 		return sqlSession.selectList(strNameSpace + ".search", keyword);
 	}
-	//검색창 총 컬럼수
+
+	// 검색창 총 컬럼수
 	public int searchCount(String keyword) {
 		return sqlSession.selectOne(strNameSpace + ".searchCount", keyword);
 	}
