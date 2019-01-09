@@ -36,7 +36,7 @@ public class RestaurantRestController {
 	@RequestMapping(value = "m/show/restaurant/info", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public String showRestaurantInfo(int restaurant_id) {
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
 		
 		Map<String, Object> dataMap = new HashMap<>();
 		dataMap.put("dataStore", service.selectOneStore(restaurant_id));
