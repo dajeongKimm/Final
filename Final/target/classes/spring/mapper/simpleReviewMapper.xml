@@ -17,6 +17,7 @@
       select * 
       from review_list_view 
       where restaurant_id = #{restaurant_id}
+      order by simple_review_id desc
    </select>
 
    <!-- 간단 리뷰 정렬 ( 최신 날짜 순 ) -->
@@ -32,6 +33,12 @@
    <select id="selectSimpleReview" parameterType="int" resultType="simpleReview">
       select * 
       from simple_review 
+      where simple_review_id = #{simple_review_id}
+   </select>
+   
+   <select id="selectOneSimpleReview" parameterType="int" resultType="reviewList">
+      select * 
+      from review_list_view 
       where simple_review_id = #{simple_review_id}
    </select>
 

@@ -114,9 +114,11 @@ public class SimpleReviewController {
 			FileVo file = new FileVo();
 			file.setFile(mf);
 			
+			// file 이름 빼고 file name list 불러와서 중복 비교
+			
 			UUID uuid = UUID.randomUUID();
 			String Original = mf.getOriginalFilename().replaceAll(" ", "");
-			String file_name = uuid.toString() + "_" + Original;
+			String file_name = uuid.toString();
 			
 			uploadService.saveFile(realPath, file, file_name);
 			

@@ -135,6 +135,10 @@ public class SimpleReviewService {
 		return this.dao.selectScore(simple_review_score_id);
 	}
 	
+	public ReviewListView selectOneView(int simple_review_id) {
+		return this.dao.selectOneView(simple_review_id);
+	}
+	
 	@Transactional
 	public int insert(SimpleReview simpleReview, Map<String, Integer> map) {
 		this.dao.insert(simpleReview.getSimpleReviewScore());

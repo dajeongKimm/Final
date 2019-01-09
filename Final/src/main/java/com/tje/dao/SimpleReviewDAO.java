@@ -32,6 +32,10 @@ public class SimpleReviewDAO {
 		return sqlSession.selectOne(strNameSpace + ".selectSimpleReview", simple_review_id);
 	}
 	
+	public ReviewListView selectOneView(int simple_review_id) {
+		return sqlSession.selectOne(strNameSpace + ".selectOneSimpleReview", simple_review_id);
+	}
+	
 	// 리뷰 전체 카운트
 	public int allCount(int restaurant_id) {
 		return sqlSession.selectOne(strNameSpace + ".selectSimpleReviewCount", restaurant_id);
