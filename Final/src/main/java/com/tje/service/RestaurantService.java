@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tje.dao.*;
 import com.tje.model.*;
 
-
 import java.util.*;
 
 @Service
@@ -28,30 +27,37 @@ public class RestaurantService {
 	public int allRestaurantCount() {
 		return this.dao.allRestaurantCount();
 	}
+
 	// 한식 전체 컬럼수
 	public int allHansikCount() {
 		return this.dao.allHansikCount();
 	}
+
 	// 치킨/피자 전체 컬럼수
 	public int allChikenAndPizzaCount() {
 		return this.dao.allChikenAndPizzaCount();
 	}
+
 	// 양식 전체 컬럼수
 	public int allYangsikCount() {
 		return this.dao.allYangsikCount();
 	}
+
 	// 중식 전체 컬럼수
 	public int allJungsikCount() {
 		return this.dao.allJungsikCount();
 	}
+
 	// 일식 전체 컬럼수
 	public int allIlsikCount() {
 		return this.dao.allIlsikCount();
 	}
+
 	// 분식점 전체 컬럼수
 	public int allBunsikCount() {
 		return this.dao.allBunsikCount();
 	}
+
 	// 디저트 전체 컬럼수
 	public int allCafeCount() {
 		return this.dao.allCafeCount();
@@ -61,37 +67,78 @@ public class RestaurantService {
 	public List<RestaurantListView> selectRestaurant(Map<String, Integer> map) {
 		return this.dao.selectRestaurant(map);
 	}
-	////////////////////RestController ////////////////////////
+
+	//////////////////// RestController ////////////////////////
 	// 음식점 전체 리스트(페이징 미포함)
-	public List<RestaurantListView> selectStore(){
+	public List<RestaurantListView> selectStore() {
 		return this.dao.selectStore();
 	}
-	//상세페이지 보기
+
+	// 상세페이지 보기
 	public DetailRestaurantView selectOneStore(int restaurant_id) {
 		return this.dao.selectOneStore(restaurant_id);
 	}
-	//메뉴
+
+	// 메뉴
 	public List<MenuList> selectStoreMenu(int restaurant_id) {
 		return this.dao.selectStoreMenu(restaurant_id);
 	}
-	//리뷰3개 보이기
-	public List<ReviewListView> selectIntroReview(int restaurant_id){
+
+	// 리뷰3개 보이기
+	public List<ReviewListView> selectIntroReview(int restaurant_id) {
 		return this.dao.selectIntroReview(restaurant_id);
 	}
+
 	public int selectReviewCount(int restaurant_id) {
 		return this.dao.selectReviewCount(restaurant_id);
 	}
-	//조회수 증가
+
+	// 조회수 증가
 	public int increaseStore(int restaurant_id) {
 		return this.dao.increaseStore(restaurant_id);
 	}
-	//검색 결과
-	public List<ReviewListView> searchStore(String keyword){
+
+	// 검색 결과
+	public List<ReviewListView> searchStore(String keyword) {
 		return this.dao.searchStore(keyword);
 	}
-	
+
+	// 한식만 분류
+	public List<DetailRestaurantView> selectHansikStore() {
+		return this.dao.selectHansikStore();
+	}
+
+	// 치킨/피자만 분류
+	public List<DetailRestaurantView> selectPizzaStore() {
+		return this.dao.selectPizzaStore();
+	}
+
+	// 양식만 분류
+	public List<DetailRestaurantView> selectYangsikStore() {
+		return this.dao.selectYangsikStore();
+	}
+
+	// 일식만 분류
+	public List<DetailRestaurantView> selectIlsikStore() {
+		return this.dao.selectIlsikStore();
+	}
+
+	// 중식만 분류
+	public List<DetailRestaurantView> selectJungsikStore() {
+		return this.dao.selectJungsikStore();
+	}
+
+	// 분식만 분류
+	public List<DetailRestaurantView> selectBunsikStore() {
+		return this.dao.selectBunsikStore();
+	}
+
+	// 디저트만 분류
+	public List<DetailRestaurantView> selectCafeStore() {
+		return this.dao.selectCafeStore();
+	}
+
 	///////////////////////////////////////////////////////////
-	
 
 	// 상세지도 보기
 	public MapCoordinate selectOneMap(MapCoordinate mapcoordinate) {
@@ -108,7 +155,7 @@ public class RestaurantService {
 	public DetailRestaurantView selectOneRestaurant(DetailRestaurantView detailRestaurantView, Visit visit) {
 		// 상세페이지 클릭될때마다 visit insert
 		this.visitDAO.visitInsert(visit);
-		
+
 		return this.dao.selectOneRestaurant(detailRestaurantView);
 	}
 
@@ -146,32 +193,31 @@ public class RestaurantService {
 	public List<DetailRestaurantView> selectCafe(Map<String, Integer> map) {
 		return this.dao.selectCafe(map);
 	}
-	
-	//조회수 증가
+
+	// 조회수 증가
 	public int increaseCount(RestaurantReadCount restaurantReadCount) {
 		return this.dao.increaseCount(restaurantReadCount);
 	}
-	
-	
-	//검색 필터
-	public List<FilterView> selectFilter(FilterView filterview){
+
+	// 검색 필터
+	public List<FilterView> selectFilter(FilterView filterview) {
 		return this.dao.selectFilter(filterview);
 	}
-	
-	//검색창
+
+	// 검색창
 	@Transactional
-	public List<FilterView> selectSearch(String keyword, SearchRank searchRank){
-		//검색될때마다 검색어 테이블에 레코드추가
+	public List<FilterView> selectSearch(String keyword, SearchRank searchRank) {
+		// 검색될때마다 검색어 테이블에 레코드추가
 		this.searchRankDAO.searchRankInsert(searchRank);
-		
+
 		return this.dao.selectSearch(keyword);
 	}
-	
-	public List<FilterView> selectSearch2(String keyword){
+
+	public List<FilterView> selectSearch2(String keyword) {
 		return this.dao.selectSearch(keyword);
 	}
-	
-	//검색창 결과 총 컬럼수
+
+	// 검색창 결과 총 컬럼수
 	public int searchCount(String keyword) {
 		return this.dao.searchCount(keyword);
 	}

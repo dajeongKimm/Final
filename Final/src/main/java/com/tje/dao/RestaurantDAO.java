@@ -48,19 +48,54 @@ public class RestaurantDAO {
 	public List<ReviewListView> selectIntroReview(int restaurant_id) {
 		return sqlSession.selectList(strNameSpace + ".selectIntroReview", restaurant_id);
 	}
-	
+
 	public int selectReviewCount(int restaurant_id) {
 		return sqlSession.selectOne(strNameSpace + ".selectReviewCount", restaurant_id);
 	}
-	
+
 	// 조회수 증가
 	public int increaseStore(int restaurant_id) {
 		return sqlSession.update(strNameSpace + ".increaseStore", restaurant_id);
 	}
-	
-	//검색결과창
-	public List<ReviewListView> searchStore (String keyword){
+
+	// 검색결과창
+	public List<ReviewListView> searchStore(String keyword) {
 		return sqlSession.selectList(strNameSpace + ".searchStore", keyword);
+	}
+
+	// 한식만 분류
+	public List<DetailRestaurantView> selectHansikStore() {
+		return sqlSession.selectList(strNameSpace + ".hansikStore");
+	}
+
+	// 치킨/피자만 분류
+	public List<DetailRestaurantView> selectPizzaStore() {
+		return sqlSession.selectList(strNameSpace + ".pizzaStore");
+	}
+
+	// 양식만 분류
+	public List<DetailRestaurantView> selectYangsikStore() {
+		return sqlSession.selectList(strNameSpace + ".yangsikStore");
+	}
+
+	// 일식만 분류
+	public List<DetailRestaurantView> selectIlsikStore() {
+		return sqlSession.selectList(strNameSpace + ".ilsikStore");
+	}
+
+	// 중식만 분류
+	public List<DetailRestaurantView> selectJungsikStore() {
+		return sqlSession.selectList(strNameSpace + ".jungsikStore");
+	}
+
+	// 분식만 분류
+	public List<DetailRestaurantView> selectBunsikStore() {
+		return sqlSession.selectList(strNameSpace + ".bunsikStore");
+	}
+
+	// 디저트만 분류
+	public List<DetailRestaurantView> selectCafeStore() {
+		return sqlSession.selectList(strNameSpace + ".cafeStore");
 	}
 	/////////////////////////////////////////////
 
@@ -153,7 +188,6 @@ public class RestaurantDAO {
 	public int increaseCount(RestaurantReadCount restaurantReadCount) {
 		return sqlSession.update(strNameSpace + ".increaseCount", restaurantReadCount);
 	}
-	
 
 	// 검색필터
 	public List<FilterView> selectFilter(FilterView filterview) {

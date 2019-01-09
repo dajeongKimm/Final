@@ -43,6 +43,42 @@
 		where restaurant_name like concat('%',#{keyword},'%')
 		group by restaurant_id;
 	</select>
+	
+	<select id="hansikStore"  resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='한식'
+	</select>
+	
+	<select id="pizzaStore"  resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='치킨/피자'
+	</select>
+	
+	<select id="yangsikStore"  resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='양식'
+	</select>
+	
+	<select id="jungsikStore"  resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='중식'
+	</select>
+	
+	<select id="ilsikStore"  resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='일식'
+	</select>
+	
+	<select id="bunsikStore"  resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='분식'
+	</select>
+	
+	<select id="cafeStore" resultType="detailRestaurantView">
+		select * from detail_restaurant_view 
+		where menu_type='카페'
+	</select>
+	
 
 
 	<!-- ////////////////////////////////// -->
