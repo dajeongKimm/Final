@@ -113,7 +113,8 @@ margin-bottom: 10px;
 		<p>회원 닉네임 :  ${loginmember.member_nickname}</p>
 		<p>회원 전화번호 :  ${loginmember.member_tel}</p> 
 		<p>회원 이메일 :  ${loginmember.member_email}</p>
-		<p>회원 주소 : <input type="button" id="a" value="OKOK" class="a"> ${loginmember.member_address.address_city} </p>
+		<p>우편 번호:  ${loginmember.member_address.address_postcode}</p>
+		<p>일반 주소 : ${loginmember.member_address.address_general} ${loginmember.member_address.address_detail}</p>
 		<p>회원 프로필 :  ${loginmember.member_photo}</p><br>
 		
 		

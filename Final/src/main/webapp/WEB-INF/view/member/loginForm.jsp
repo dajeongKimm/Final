@@ -16,6 +16,7 @@
 <script type = "text.javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script> 
 <script type = "text.javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"> </script>
 
+
 <!-- html 메인화면 적용시킨 것  -->
 <%-- 부트스트랩 이용하기 --%>
 <link href='http://fonts.googleapis.com/earlyaccess/nanumgothic.css'
@@ -23,6 +24,8 @@
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/font-awesome.css" rel="stylesheet">
+
+<!-- 
 <style>
  	#loginform {
     width: 100%;
@@ -62,7 +65,7 @@ input{
 	
 }
 </style>
-
+ -->
 <script type="text/javascript">
 function loginBtn(){
 
@@ -87,43 +90,30 @@ function loginBtn(){
 <body>
 
 	<jsp:include page="/indexHeader.jsp"/>
+
+    <div class="container">
+    <div class="col-lg-4"> </div>
+    <div class="col-lg-4">
+        <div class="jumbotron" style="padding-top: 20px; margin-top: 20px;">
+      	  <form action="${pageContext.request.contextPath}/member/login" method="post" id="loginForm" name="loginForm">
+          
+                <h3 style="text-align: center;">로그인</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="아이디" 
+                           name="member_id" maxlength="20" id="member_id">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="비밀번호" 
+                           name="member_password" maxlength="20" id="member_password">
+                </div>
+                <input type="button" class="btn btn-primary form-control" value="로그인" onclick="loginBtn()">
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-4"></div>
+    </div>
 	
-	<div id="loginform" align="center">
-	<form action="${pageContext.request.contextPath}/member/login" method="post" id="loginForm" name="loginForm">
-		<div >
-			<div>
-			<p>　</p>
-			</div>
-			<div>
-			<p style="font-size: 30px ; text-align:center;  font-weight: bold;">Login</p>
-			</div>
-			<div>
-			<p>　</p>
-			</div>
-			<div>
-				<p style="font-size:15px;margin-bottom: 10px;">로그인 정보를 입력하세요</p>
-			</div>
-		
-			<div>
-			<p><input type="text" name="member_id"  class="member_id" id="member_id" placeholder="Your ID"></p>
-			</div>
-			<div>
-			<p><input type="password" name="member_password" class="member_password" id="member_password" placeholder="Your Password"></p>
-			</div>
-			<div>
-			<p>　</p>
-			</div>
-			<div>
-					<a style="font-size: 15px ;text-align:center;  font-weight: bold;">
-					<input type="button" value="LOGIN" style="width: 100px; height: 50px;" onclick="loginBtn()">
-					
-					</a>
-			</div>
-			
-		</div>	
-			
-	</form>
-	</div>
+	
 	<jsp:include page="/indexFooter.jsp"/>
 	
 </body>

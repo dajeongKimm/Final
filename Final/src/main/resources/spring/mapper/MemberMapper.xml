@@ -13,27 +13,87 @@
 	<select id="CKnickName" parameterType="member" resultType="member">
 		select * from member where member_nickname = #{member_nickname}
 	</select>
-	
-	
-	<!-- 로그인 -->
-  	<select id="login" parameterType="member" resultType="member">
-		select *  from member where member_id =#{member_id} and member_password =#{member_password} 
-	</select>
-	
-	<insert id="insertAddress"  useGeneratedKeys="true" keyProperty="address_id"  parameterType="member_address" >
-		insert into member_address 
-		(address_city, address_gu, address_dong, address_detail, address_postcode )
-		values(#{address_city}, #{address_gu}, #{address_dong}, #{address_detail}, #{address_postcode})
-	</insert>
 
 	
-	<!-- 
-	<insert id="insertMember" parameterType="member" >
-		insert into Member
-		values(#{member_id},#{member_password},#{member_name},#{member_nickname},#{member_tel},#{member_address.address_id},#{member_email},
-				null, #{member_gender}, default, null, now())
-	</insert>
+	
+	<!-- 회원가입 ID 중복체크 -->
+	<select id="idcheck" parameterType="String" resultType="Integer">
+		select count(*) from member
+		where member_id = #{member_id}
+	
+	</select>
+	
+		
+	<!-- 닉네임  중복체크 -->
+	<select id="nicknamecheck" parameterType="String" resultType="Integer">
+		select count(*) from member
+		where member_nickname = #{member_nickname}
+	</select>
+	
+<!-- 	
+	
+	로그인
+
+  	 <select id="login" parameterType="member" resultType="member">
+		select * from
+		member inner join member_address
+		on member.member_address_id = member_address.member_address_id
+		where member_id = #{member_id} 
+	</select> 
 	 -->
+	
+		
+	
+	
+	
+	
+		<!-- 주소값  -->
+	<insert id="insertAddress"  useGeneratedKeys="true" keyProperty="address_id"  parameterType="member_address" >
+		insert into member_address
+		(address_postcode,
+		 address_general,
+		  address_detail)
+		values
+		(
+		#{address_postcode},
+		 #{address_general},
+		 #{address_detail}
+		 )
+	</insert>
+	
+	
+	
+	<!-- 주소 업데이트 -->
+	<update id="updateAddress" useGeneratedKeys="true" keyProperty="address_id" parameterType="member_address">
+		  update member_address
+		  set
+		  address_postcode = #{address_postcode},
+		  address_general = #{address_general},
+		  address_detail = #{address_detail}
+        where member_address_id = #{member_address_id};
+	
+	</update>
+	
+	<update id="updateMember" parameterType="member">
+		update member set
+		member_nickname = #{member_nickname},
+		member_tel = #{member_tel},
+		member_email = #{member_email}
+		where member_id = #{member_id}	
+	</update>
+	
+	<update id="MobileUpdateMember" parameterType="member">
+		update member set
+		member_password = #{member_password},
+		member_name = #{member_name},
+		member_nickname = #{member_nickname},
+		member_tel = #{member_tel},
+		member_email = #{member_email}
+		where member_id = #{member_id}	
+	</update>
+	
+	
+
 	<insert id="insertMember" parameterType="member" >
 		insert into Member (`member_id`,`member_password`, `member_name`, `member_nickname`, `member_tel`, `member_address_id`, `member_email`, `member_birthday`, `member_gender`, `member_type`, `member_photo`, `member_registdate`)
 				select  
@@ -44,11 +104,73 @@
 					#{member_tel} as `member_tel`,
 					#{member_address.address_id} as `member_address_id`,
 					#{member_email} as `member_email`,
-					str_to_date(#{member_birthday}, '%Y %m %d') as `member_birthday`,
+					#{member_birthday} as `member_birthday`,
 					#{member_gender} as `member_gender`,
 					0 as `member_type`,
 					#{member_photo} as `member_photo`,
 					now() as `member_registdate`
 	</insert>
+	
+	
+	
+	
+	
+	
+	<!-- Member 와 Member_address 클래스를 매핑 시켜주기 위해 설정  -->
+	
+	<resultMap type="member" id="Member">
+		<result property="member_id" column="member_id"/>
+		<result property="member_password" column="member_password"/>
+		<result property="member_name" column="member_name"/>
+		<result property="member_nickname" column="member_nickname"/>
+		<result property="member_tel" column="member_tel"/>
+		<result property="member_address_id" column="member_address_id"/>
+		<result property="member_email" column="member_email"/>
+		<result property="member_birthday" column="member_birthday"/>
+		<result property="member_gender" column="member_gender"/>
+		<result property="member_type" column="member_type"/>
+		<result property="member_photo" column="member_photo"/>
+		<result property="member_registdate" column="member_registdate"/>
+		<association property="member_address" javaType="Member_address">
+    		<result property="address_postcode" column="address_postcode" />
+			<result property="address_general" column="address_general" />
+			<result property="address_detail" column="address_detail" />
+    	</association>		
+	</resultMap>
+	
+	<!-- 조인을 통해 주소값 추출  -->
+	<select id="login" parameterType="member" resultMap="Member">
+		select * from
+		member inner join member_address
+		on member.member_address_id = member_address.member_address_id
+		where member_id = #{member_id} and member_password = #{member_password}
+	</select> 
+	
+	
+	
+
+	
+	
+	<update id="memberupdate" parameterType="member"  >
+		update
+		member inner join member_address
+		on member.member_address_id = member_address.member_address_id
+		set
+		member.member_nickname = #{member_nickname},
+		member.member_tel = #{member_tel},
+		member.member_email = #{member_email},
+		member_address.address_postcode = #{member_address.address_postcode},
+		member_address.address_general = #{member_address.address_general},
+		member_address.address_detail = #{member_address.address_detail}
+		where member_id = #{member_id} 
+		
+		
+	
+	
+	</update>
+	
+	
+	
+	
 	
 </mapper>

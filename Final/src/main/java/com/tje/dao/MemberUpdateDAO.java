@@ -16,6 +16,7 @@ public class MemberUpdateDAO {
 	private SqlSessionTemplate sqlSession;
 
 	private String strNameSpace = "MemberUpdateMapper";
+	private String strNameSpace2 = "com.tje.model.MemberMapper";
 
 	public void setSqlSession(SqlSessionTemplate sqlSession) {
 		this.sqlSession = sqlSession;
@@ -55,6 +56,33 @@ public class MemberUpdateDAO {
 
 	public int deleteMember(Member member) {
 		return sqlSession.delete(strNameSpace + ".deleteMember", member);
+	}
+
+	public int updateMember(Member member) {
+		System.out.println(member.getMember_id());
+		System.out.println(member.getMember_email());
+		System.out.println(member.getMember_nickname());
+		System.out.println(member.getMember_tel());
+		
+		return sqlSession.update(strNameSpace2 + ".updateMember",member);
+	}
+	
+	public int updateMember_m(Member member) {
+
+		
+		return sqlSession.update(strNameSpace2 + ".MobileUpdateMember",member);
+	}
+
+	public int updateMemberAddress(Member_address member_address) {
+		
+		System.out.println("주소 먼저 수정");
+		System.out.println(member_address.getAddress_postcode());
+		System.out.println(member_address.getAddress_general());
+		System.out.println(member_address.getAddress_detail());
+		
+		
+		return sqlSession.update(strNameSpace2 + ".updateAddress",member_address);
+		
 	}
 
 }

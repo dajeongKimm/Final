@@ -36,9 +36,28 @@ public class MemberDAO {
 	public int insert(Member member) {
 		return sqlSession.insert(strNameSpace + ".insertMember", member);
 	}
-
+//
+//	public Member login(Member member) {
+//		return sqlSession.selectOne(strNameSpace + ".login", member);
+//	}
+	
 	public Member login(Member member) {
 		return sqlSession.selectOne(strNameSpace + ".login", member);
 	}
+	
+	// 아이디 중복체크 Map 형식 int count 값 
+		public int idcheck(String member_id) {
+			return sqlSession.selectOne(strNameSpace + ".idcheck",member_id);
+		}
+
+
+
+		public int nicknamecheck(String member_nickname) {
+			return sqlSession.selectOne(strNameSpace + ".nicknamecheck",member_nickname);
+		}
+
+		
+		
+	
 
 }

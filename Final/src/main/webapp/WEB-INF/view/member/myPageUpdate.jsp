@@ -28,7 +28,7 @@
 #mainDiv {
     float: left;
     width: 800px;
-    height: 600px;
+    height: 800px;
     text-align: left;
     margin: 20px auto;
     margin-left: 70px;
@@ -101,16 +101,24 @@ margin-bottom: 10px;
 		
 		<p>회원 ID :  ${loginmember.member_id}</p>
 		<p>회원 이름 : ${loginmember.member_name}</p>
-		<p>회원 닉네임 :  ${loginmember.member_nickname}</p>
-		<p>변경할 닉네임 : <input type="text" name="member_id" id="member_id"></p>
-		<p>회원 전화번호 :  ${loginmember.member_tel}</p>
-		<p>변경할 전화번호 : <input type="tel" name="member_tel" id="member_tel"></p> 
-		<p>회원 이메일 :  ${loginmember.member_email}</p>
-		<p>변경할 이메일 : <input type="email" name="member_email" id="member_email"></p>
-		<p>회원 주소 : <input type="button" id="a" value="OKOK" class="a"> ${loginmember.member_address.address_city} </p>
+		<p>회원 닉네임 : <input type="text" name="member_nickname" id="member_nickname" value="${loginmember.member_nickname}"></p>
+		<p>회원 전화번호 : <input type="tel" name="member_tel" id="member_tel" value="${loginmember.member_tel}"></p> 
+		<p>회원 이메일 : <input type="email" name="member_email" id="member_email" value="${loginmember.member_email}"></p>
+		회원 주소 
+		<p> <input type="text" id="address_postcode" name="member_address.address_postcode" value="[${loginmember.member_address.address_postcode}]" readonly style="background-color: #d6d6d6;"> <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>    </p> 
+		<div>
+		<p> <input type="text" id="address_general" name="member_address.address_general" value="${loginmember.member_address.address_general}" readonly 
+		style=" width: 37%; background-color: #d6d6d6;"></p>
+		</div>
+		<div>
+		<p> <input type="text" id="address_detail" name="member_address.address_detail" value="${loginmember.member_address.address_detail}" style="width: 37%">  </p>
+		</div>
 		<p>회원 프로필 :  ${loginmember.member_photo}</p>
-		<p>변경할 프로필 : <input type="text" name="member_photo" id="member_photo"><input type="submit" value="회원정보 변경"></p>	
-		
+		<p>변경할 프로필 : <input type="text" name="member_photo" id="member_photo"></p>	
+		<input type="submit" value="회원정보 변경">
+		<input type="hidden" name="member_address.member_address_id" id="member_address_id" value="${loginmember.member_address_id}" />
+		<input type="hidden" name="member_id" id="member_id" value="${loginmember.member_id}" />
+		<input type="hidden" name="member_password" id="member_password" value="${loginmember.member_password}" />
 		</div>
 	
 	</div>
@@ -120,6 +128,64 @@ margin-bottom: 10px;
 
 </form>
 </main>
+
+
+<!--  다음 우편번호 API  -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>    
+    
+    function execPostCode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+               // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+               // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+               var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+               var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+               // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+               // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+               if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                   extraRoadAddr += data.bname;
+               }
+               // 건물명이 있고, 공동주택일 경우 추가한다.
+               if(data.buildingName !== '' && data.apartment === 'Y'){
+                  extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+               }
+               // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+               if(extraRoadAddr !== ''){
+                   extraRoadAddr = ' (' + extraRoadAddr + ')';
+               }
+               // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+               if(fullRoadAddr !== ''){
+                   fullRoadAddr += extraRoadAddr;
+               }
+
+               // 우편번호와 주소 정보를 해당 필드에 넣는다.
+               console.log(data.zonecode);
+               console.log(fullRoadAddr);
+               
+               
+             /*   $("[name=member_address.member_postcode]").val(data.zonecode);
+               $("[name=member_address.member_address]").val(fullRoadAddr);
+               */
+               
+               document.getElementById('address_postcode').value = data.zonecode;
+               document.getElementById('address_general').value = fullRoadAddr;
+               
+               document.getElementById('address_detail').focus();
+               
+               /* document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
+               document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
+               document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress; */
+           }
+        }).open();
+    }
+</script>
+
+
+
 
 <jsp:include page="/indexFooter.jsp"/>
 </body>

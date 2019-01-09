@@ -1,5 +1,7 @@
 package com.tje.controller;
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tje.model.Member;
+
 import com.tje.service.MemberService;
 
 @Controller
@@ -38,51 +42,17 @@ public class MemberController {
 	}
 	
 	
+
+	
 	//회원가입 폼으로 이동
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
 	public String insertMemberForm() {
 		return "member/insertForm";
 	}
 	
-	
-	
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
 	public String insertMember(Model model, Member member) {
 		
-		
-		//member
-		
-		member.getMember_id();
-		member.getMember_password();
-		member.getMember_name();
-		member.getMember_nickname();
-		member.getMember_tel();
-		member.getMember_address().getAddress_city();
-		member.getMember_address().getAddress_gu();
-		member.getMember_address().getAddress_dong();
-		member.getMember_address().getAddress_detail();
-		member.getMember_address().getAddress_postcode();
-		member.getMember_email();
-		
-		member.getMember_birthday();
-		member.getMember_gender();
-		member.getMember_photo();
-		
-		System.out.println(member.getMember_id());
-		System.out.println(member.getMember_password());
-		System.out.println(member.getMember_name());
-		System.out.println(member.getMember_nickname());
-		System.out.println(member.getMember_tel());
-		System.out.println(member.getMember_address().getAddress_city());
-		System.out.println(member.getMember_address().getAddress_gu());
-		System.out.println(member.getMember_address().getAddress_dong());
-		System.out.println(member.getMember_address().getAddress_detail());
-		System.out.println(member.getMember_address().getAddress_postcode());
-		System.out.println(member.getMember_email());
-		System.out.println(member.getMember_birthday());
-		System.out.println(member.getMember_gender());
-		System.out.println(member.getMember_photo());
-		//주소 insert
 		
 		//주소포함한 member정보 insert
 		
@@ -105,6 +75,11 @@ public class MemberController {
 		
 		member = service.login(member);
 		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		String strJson = gson.toJson(member);
+		
+		System.out.println(strJson);
+		
 		System.out.println("service login : "+member);
 		String msg;
 		if (member == null) {
@@ -123,6 +98,9 @@ public class MemberController {
 		}
 		
 	}
+	
+	
+
 	//로그아웃
 	@RequestMapping(value="member/logout" ,method=RequestMethod.GET)
 	public String mainLogout(HttpSession session,HttpServletRequest req , HttpServletResponse res) throws Exception {
@@ -199,4 +177,7 @@ public class MemberController {
 		return "{\"value\" : \"" + msg + "\"}";
 		
 	} 
+	
+	
+	
 }

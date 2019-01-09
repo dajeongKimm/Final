@@ -3,6 +3,9 @@ package com.tje.model;
 import java.util.Date;
 
 public class Member {
+
+	
+	
 	
 	private String member_id;
 	private String member_password;
@@ -17,10 +20,14 @@ public class Member {
 	private String member_gender;
 	private int member_type =0;
 	private String member_photo;
-	private Date member_date;
+	private Date member_registdate;
 	
 	private Member_address member_address;
 	
+	public Member () {}
+	
+	
+
 	public Member_address getMember_address() {
 		return member_address;
 	}
@@ -33,9 +40,7 @@ public class Member {
 		this.member_address_id = member_address_id;
 	}
 
-	public Member() {
-		
-	}
+	
 
 	public String getMember_id() {
 		return member_id;
@@ -124,13 +129,19 @@ public class Member {
 		this.member_photo = member_photo;
 	}
 
-	public Date getMember_date() {
-		return member_date;
+
+
+	public Date getMember_registdate() {
+		return member_registdate;
 	}
 
-	public void setMember_date(Date member_date) {
-		this.member_date = member_date;
+
+
+	public void setMember_registdate(Date member_registdate) {
+		this.member_registdate = member_registdate;
 	}
+
+	
 	
 	
 }
