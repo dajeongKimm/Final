@@ -238,5 +238,22 @@ public class SimpleReviewRestController {
 		System.out.println(strJson);
 		return strJson;
 	}
+	
+	@RequestMapping(value="/m/i/review_list", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	   public String restful_read_simple_review_ios(int restaurant_id) {
+		   
+		   System.out.println(restaurant_id);
+		   System.out.println("review_list 메소드 호출");
+		   // List<ReviewListView> list = reviewService.selectList(restaurant_id);
+		   
+		   List<ReviewListView> list = reviewService.selectList(restaurant_id); 
+		   
+		   Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+		   String strJson = gson.toJson(list);
+		   System.out.println(strJson);
+		   
+		   return strJson;
+		   
+	   }
    
 }

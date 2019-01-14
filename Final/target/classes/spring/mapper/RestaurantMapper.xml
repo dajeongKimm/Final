@@ -39,10 +39,20 @@
 	</select>
 	
 	<select id="searchStore" parameterType="String" resultType="filterview">
+		select distinct restaurant_id, restaurant_mainimage, restaurant_name, restaurant_description, menu_type,
+		map_coordinate_lat, map_coordinate_long,
+		read_count,
+		sum_score, allcount  
+		from restaurant_list_view
+		where restaurant_name like concat('%',#{keyword},'%');
+	</select>
+	<!-- 
+	<select id="searchStore" parameterType="String" resultType="filterview">
 		select * from restaurant_list_view
 		where restaurant_name like concat('%',#{keyword},'%')
 		group by restaurant_id;
 	</select>
+	 -->
 	
 	<select id="hansikStore"  resultType="detailRestaurantView">
 		select * from detail_restaurant_view 
@@ -297,10 +307,20 @@
 	</select>
 	 -->
 	<select id="search" parameterType="String" resultType="filterview">
+		select distinct restaurant_id, restaurant_mainimage, restaurant_name, restaurant_description, menu_type,
+		map_coordinate_lat, map_coordinate_long,
+		read_count,
+		sum_score, allcount 
+		from Filter_view
+		where restaurant_name like concat('%',#{keyword},'%');
+	</select>
+	<!-- 
+	<select id="search" parameterType="String" resultType="filterview">
 		select * from Filter_view
 		where restaurant_name like concat('%',#{keyword},'%')
 		group by restaurant_id;
 	</select>
+	 -->
 	
 	<!-- 검색창에서 나온 결과의 총 컬럼수 -->
 	<select id="searchCount" parameterType="String" resultType="int">

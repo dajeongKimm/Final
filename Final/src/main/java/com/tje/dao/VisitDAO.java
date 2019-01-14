@@ -28,4 +28,8 @@ public class VisitDAO {
 	public List<VisitView> visitSelect(VisitView visistView){
 		return this.sqlSession.selectList(strNameSpace + ".visitSelect", visistView);
 	}
+	
+	public List<VisitView> visit(String member_id){
+		return this.sqlSession.selectList(strNameSpace + ".visit", member_id);
+	}
 }

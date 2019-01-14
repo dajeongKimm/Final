@@ -13,12 +13,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tje.model.DetailRestaurantView;
 import com.tje.service.RestaurantService;
+import com.tje.service.VisitService;
 
 @RestController
 public class RestaurantRestController {
 
 	@Autowired
 	private RestaurantService service;
+	@Autowired
+	private VisitService visitService;
 
 	// 음식점 전체 리스트 불러오기
 	// 뒤코드 한글 깨짐 방지
@@ -66,7 +69,6 @@ public class RestaurantRestController {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-		// list.. 타입임..
 		String data = gson.toJson(service.selectHansikStore());
 
 		return data;
@@ -77,7 +79,6 @@ public class RestaurantRestController {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-		// list.. 타입임..
 		String data = gson.toJson(service.selectJungsikStore());
 
 		return data;
@@ -88,7 +89,6 @@ public class RestaurantRestController {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-		// list.. 타입임..
 		String data = gson.toJson(service.selectIlsikStore());
 
 		return data;
@@ -99,7 +99,6 @@ public class RestaurantRestController {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-		// list.. 타입임..
 		String data = gson.toJson(service.selectPizzaStore());
 
 		return data;
@@ -110,7 +109,6 @@ public class RestaurantRestController {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-		// list.. 타입임..
 		String data = gson.toJson(service.selectYangsikStore());
 
 		return data;
@@ -121,7 +119,6 @@ public class RestaurantRestController {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-		// list.. 타입임..
 		String data = gson.toJson(service.selectBunsikStore());
 
 		return data;
@@ -132,9 +129,28 @@ public class RestaurantRestController {
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-		// list.. 타입임..
 		String data = gson.toJson(service.selectCafeStore());
 
 		return data;
 	}
+
+	//방문기록
+	@RequestMapping(value = "m/show/visit", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8" )
+	public String showVisitLog(String member_id) {
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+
+		String data = gson.toJson(visitService.visit(member_id));
+
+		return data;
+	}
+	
 }
+
+
+
+
+
+
+
+

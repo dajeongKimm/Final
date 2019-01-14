@@ -23,4 +23,8 @@ public class VisitService {
 	public List<VisitView> visitSelect(VisitView visistView){
 		return this.dao.visitSelect(visistView);
 	}
+	
+	public List<VisitView> visit(String member_id){
+		return this.dao.visit(member_id);
+	}
 }
