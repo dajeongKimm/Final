@@ -297,7 +297,7 @@ var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
       </tr>
       <tr>
          <td>
-         	<img id="member" src="${ pageContext.request.contextPath }/resources/upload/member/${ reviewList.member_photo }" class="img-circle" width="100px" height="100px">
+         	<img id="member" src="${ pageContext.request.contextPath }/resources/upload/memberImage/${ reviewList.member_photo }" class="img-circle" width="100px" height="100px">
          </td>
          <td colspan="2">${ reviewList.simple_review_contents_text }</td>
       </tr>

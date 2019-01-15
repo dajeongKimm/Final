@@ -23,237 +23,245 @@ import javax.servlet.http.HttpSession;
 @RestController
 public class SimpleReviewRestController {
 
-   @Autowired
-   private SimpleReviewService reviewService;
-   @Autowired
-   private FileUploadService uploadService;
+	@Autowired
+	private SimpleReviewService reviewService;
+	@Autowired
+	private FileUploadService uploadService;
 
-   @ModelAttribute("realPath")
+	@ModelAttribute("realPath")
 	public String getRealPath(HttpServletRequest request) {
-		// 실제 서버가 구동중인 경로를 반환    	
+		// 실제 서버가 구동중인 경로를 반환
 		String realPath = request.getRealPath("/WEB-INF/resources/upload/simpleReview");
 		return realPath;
 	}
-   
-   /*
-   @RequestMapping(value="/m/allRestaurantList/{restaurant_id}/writeSimpleReview", method=RequestMethod.POST)
-	public void insertSimpleReview_2(MultipartFile simple_review_photo, @PathVariable int restaurant_id, @ModelAttribute("realPath") String realPath) {
-	   	System.out.println("file test");
-	   	System.out.println(realPath);
-	   	System.out.println(simple_review_photo.getSize());
-	   	
-		FileVo file = new FileVo();
-		file.setFile(simple_review_photo);
-			
-		// file 이름 빼고 file name list 불러와서 중복 비교
-		UUID uuid = UUID.randomUUID();
-		String file_name = uuid.toString();
-			
-		System.out.println(simple_review_photo.getOriginalFilename());
-		System.out.println(file_name);
-		// System.out.println(uploadService.saveFile(realPath, file, file_name));
-   }
-   */
-  
-   
-   @RequestMapping(value="/m/allRestaurantList/{restaurant_id}/writeSimpleReview", method=RequestMethod.POST)
-   public void restful_write_simple_review(String simple_review_contents_text, 
-                                 @PathVariable int restaurant_id, 
-                                 MultipartFile simple_review_photo,
-                                 String score_flavor, 
-                                 String score_volume, 
-                                 String score_service, 
-                                 String total_score,
-                                 @ModelAttribute("realPath") String realPath) {
-      
-      String member_id = "admin";
-      
-      System.out.println(simple_review_contents_text);
-      System.out.println(score_flavor);
-      System.out.println(score_volume);
-      System.out.println(score_service);
-      System.out.println(total_score);
-      
-      SimpleReviewLike like = new SimpleReviewLike();
-      like.setMember_id(member_id);
-      like.setRestaurant_id(restaurant_id);
-      
-      SimpleReviewNotify notify = new SimpleReviewNotify();
-      notify.setMember_id(member_id);
-      notify.setRestaurant_id(restaurant_id);
-      
-      SimpleReviewScore score = new SimpleReviewScore();
-      score.setMember_id(member_id);
-      score.setRestaurant_id(restaurant_id);
-      score.setScore_flavor(Integer.parseInt(score_flavor));
-      score.setScore_volume(Integer.parseInt(score_volume));
-      score.setScore_service(Integer.parseInt(score_service));
-      score.setTotal_score(Integer.parseInt(total_score));
-      
-      SimpleReview simple = new SimpleReview();
-      simple.setMember_id(member_id);
-      simple.setRestaurant_id(restaurant_id);
-      simple.setSimple_review_contents_text(simple_review_contents_text);
-      simple.setSimpleReviewLike(like);
-      simple.setSimpleReviewNotify(notify);
-      simple.setSimpleReviewScore(score);
-      // file
-      SimpleReviewFile file;
-      
-      if(simple_review_photo != null) {
-	      file = new SimpleReviewFile();
-	      ///////
-	      FileVo fileVo = new FileVo();
-	      fileVo.setFile(simple_review_photo);
-				
-		  // file 이름 빼고 file name list 불러와서 중복 비교
-		  UUID uuid = UUID.randomUUID();
-		  String file_name = uuid.toString();
-				
-		  System.out.println(simple_review_photo.getOriginalFilename());
-		  System.out.println(file_name);
-		  uploadService.saveFile(realPath, fileVo, file_name);
-	      ///////
-	      
-		  file.setFile_name(file_name);
-	      simple.setSimpleReviewFile(file);
-      } else {
-    	  file = new SimpleReviewFile();
-    	  simple.setSimpleReviewFile(file);
-      }
-      
-      Map<String, Integer> map = new HashMap<>();
-      map.put("total_score", Integer.parseInt(total_score));
-      map.put("restaurant_id", restaurant_id);
-      
-      reviewService.insert(simple, map);
-      
-   }
-   
-   
-   @RequestMapping(value="/m/select_one", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
-   public String restful_select_one_simple_review(int simple_review_id) {
-	   System.out.println(simple_review_id);
-	   ReviewListView one = reviewService.selectOneView(simple_review_id);
-	   Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-	   String strJson = gson.toJson(one);
-	   System.out.println(strJson);
-	   
-	   return strJson;
-   }
 
-   @RequestMapping(value="/m/review_list", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
-   public String restful_read_simple_review(int restaurant_id) {
-	   
-	   System.out.println(restaurant_id);
-	   System.out.println("review_list 메소드 호출");
-	   // List<ReviewListView> list = reviewService.selectList(restaurant_id);
-	   
-	   Map<String, Object> map = new HashMap<>();
-	   map.put("review_list", reviewService.selectList(restaurant_id));
-	   map.put("review_count", reviewService.allCount(restaurant_id));
-	   
-	   Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-	   String strJson = gson.toJson(map);
-	   System.out.println(strJson);
-	   
-	   return strJson;
-	   
-   }
-   
-   
-	@RequestMapping(value="/m/addLikeCount", method=RequestMethod.POST)
+	/*
+	 * @RequestMapping(value=
+	 * "/m/allRestaurantList/{restaurant_id}/writeSimpleReview",
+	 * method=RequestMethod.POST) public void insertSimpleReview_2(MultipartFile
+	 * simple_review_photo, @PathVariable int
+	 * restaurant_id, @ModelAttribute("realPath") String realPath) {
+	 * System.out.println("file test"); System.out.println(realPath);
+	 * System.out.println(simple_review_photo.getSize());
+	 * 
+	 * FileVo file = new FileVo(); file.setFile(simple_review_photo);
+	 * 
+	 * // file 이름 빼고 file name list 불러와서 중복 비교 UUID uuid = UUID.randomUUID(); String
+	 * file_name = uuid.toString();
+	 * 
+	 * System.out.println(simple_review_photo.getOriginalFilename());
+	 * System.out.println(file_name); //
+	 * System.out.println(uploadService.saveFile(realPath, file, file_name)); }
+	 */
+
+	@RequestMapping(value = "/m/allRestaurantList/{restaurant_id}/writeSimpleReview", method = RequestMethod.POST)
+	public void restful_write_simple_review(String simple_review_contents_text, @PathVariable int restaurant_id,
+			MultipartFile simple_review_photo, String score_flavor, String score_volume, String score_service,
+			String total_score, @ModelAttribute("realPath") String realPath) {
+
+		String member_id = "admin";
+
+		System.out.println(simple_review_contents_text);
+		System.out.println(score_flavor);
+		System.out.println(score_volume);
+		System.out.println(score_service);
+		System.out.println(total_score);
+
+		SimpleReviewLike like = new SimpleReviewLike();
+		like.setMember_id(member_id);
+		like.setRestaurant_id(restaurant_id);
+
+		SimpleReviewNotify notify = new SimpleReviewNotify();
+		notify.setMember_id(member_id);
+		notify.setRestaurant_id(restaurant_id);
+
+		SimpleReviewScore score = new SimpleReviewScore();
+		score.setMember_id(member_id);
+		score.setRestaurant_id(restaurant_id);
+		score.setScore_flavor(Integer.parseInt(score_flavor));
+		score.setScore_volume(Integer.parseInt(score_volume));
+		score.setScore_service(Integer.parseInt(score_service));
+		score.setTotal_score(Integer.parseInt(total_score));
+
+		SimpleReview simple = new SimpleReview();
+		simple.setMember_id(member_id);
+		simple.setRestaurant_id(restaurant_id);
+		simple.setSimple_review_contents_text(simple_review_contents_text);
+		simple.setSimpleReviewLike(like);
+		simple.setSimpleReviewNotify(notify);
+		simple.setSimpleReviewScore(score);
+		// file
+		SimpleReviewFile file;
+
+		if (simple_review_photo != null) {
+			file = new SimpleReviewFile();
+			///////
+			FileVo fileVo = new FileVo();
+			fileVo.setFile(simple_review_photo);
+
+			// file 이름 빼고 file name list 불러와서 중복 비교
+			UUID uuid = UUID.randomUUID();
+			String file_name = uuid.toString();
+
+			System.out.println(simple_review_photo.getOriginalFilename());
+			System.out.println(file_name);
+			uploadService.saveFile(realPath, fileVo, file_name);
+			///////
+
+			file.setFile_name(file_name);
+			simple.setSimpleReviewFile(file);
+		} else {
+			file = new SimpleReviewFile();
+			simple.setSimpleReviewFile(file);
+		}
+
+		Map<String, Integer> map = new HashMap<>();
+		map.put("total_score", Integer.parseInt(total_score));
+		map.put("restaurant_id", restaurant_id);
+
+		reviewService.insert(simple, map);
+
+	}
+
+	@RequestMapping(value = "/m/select_one", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public String restful_select_one_simple_review(int simple_review_id) {
+		System.out.println(simple_review_id);
+		ReviewListView one = reviewService.selectOneView(simple_review_id);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+		String strJson = gson.toJson(one);
+		System.out.println(strJson);
+
+		return strJson;
+	}
+
+	@RequestMapping(value = "/m/review_list", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public String restful_read_simple_review(int restaurant_id) {
+
+		System.out.println(restaurant_id);
+		System.out.println("review_list 메소드 호출");
+		// List<ReviewListView> list = reviewService.selectList(restaurant_id);
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("review_list", reviewService.selectList(restaurant_id));
+		map.put("review_count", reviewService.allCount(restaurant_id));
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+		String strJson = gson.toJson(map);
+		System.out.println(strJson);
+
+		return strJson;
+
+	}
+
+	@RequestMapping(value = "/m/addLikeCount", method = RequestMethod.POST)
 	public String selectLikeCount_add(int simple_review_id) {
 		SimpleReview simpleReview = reviewService.selectOne(simple_review_id);
 		System.out.println(simple_review_id + " like");
-		
+
 		int count = 0;
-		try{
+		try {
 			count = reviewService.addLikeCount(simpleReview);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Gson gson = new Gson();
 		String strJson = gson.toJson(count);
-		
+
 		System.out.println(strJson);
 		return strJson;
 	}
-	
-	@RequestMapping(value="/m/cancelLikeCount", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/m/cancelLikeCount", method = RequestMethod.POST)
 	public String selectLikeCount_cancel(int simple_review_id) {
 		SimpleReview simpleReview = reviewService.selectOne(simple_review_id);
 		System.out.println(simple_review_id + " like cancel");
-		
+
 		int count = 0;
-		try{
+		try {
 			count = reviewService.cancelLikeCount(simpleReview);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Gson gson = new Gson();
 		String strJson = gson.toJson(count);
-		
+
 		System.out.println(strJson);
 		return strJson;
 	}
-	
-	@RequestMapping(value="/m/cancelBadCount", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/m/cancelBadCount", method = RequestMethod.POST)
 	public String selectBadCount_add(int simple_review_id) {
 		SimpleReview simpleReview = reviewService.selectOne(simple_review_id);
 		System.out.println(simple_review_id + "bad");
-		
+
 		int count = 0;
-		try{
+		try {
 			count = reviewService.cancelBadCount(simpleReview);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Gson gson = new Gson();
 		String strJson = gson.toJson(count);
-		
+
 		System.out.println(strJson);
 		return strJson;
 	}
-	
-	
-	@RequestMapping(value="/m/addBadCount", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/m/addBadCount", method = RequestMethod.POST)
 	public String selectBadCount_cancel(int simple_review_id) {
 		SimpleReview simpleReview = reviewService.selectOne(simple_review_id);
 		System.out.println(simple_review_id + "bad cancel");
-		
+
 		int count = 0;
-		try{
+		try {
 			count = reviewService.addBadCount(simpleReview);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Gson gson = new Gson();
 		String strJson = gson.toJson(count);
-		
+
 		System.out.println(strJson);
 		return strJson;
 	}
+
+	@RequestMapping(value = "/m/i/review_list", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public String restful_read_simple_review_ios(int restaurant_id) {
+
+		System.out.println(restaurant_id);
+		System.out.println("review_list 메소드 호출");
+		// List<ReviewListView> list = reviewService.selectList(restaurant_id);
+
+		List<ReviewListView> list = reviewService.selectList(restaurant_id);
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
+		String strJson = gson.toJson(list);
+		System.out.println(strJson);
+
+		return strJson;
+
+	}
 	
-	@RequestMapping(value="/m/i/review_list", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
-	   public String restful_read_simple_review_ios(int restaurant_id) {
-		   
-		   System.out.println(restaurant_id);
-		   System.out.println("review_list 메소드 호출");
-		   // List<ReviewListView> list = reviewService.selectList(restaurant_id);
-		   
-		   List<ReviewListView> list = reviewService.selectList(restaurant_id); 
-		   
-		   Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
-		   String strJson = gson.toJson(list);
-		   System.out.println(strJson);
-		   
-		   return strJson;
-		   
-	   }
-   
+	//리뷰 삭제
+	@RequestMapping(value = "/m/allRestaurantList/delete/", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public void deleteSimpleReview(int restaurant_id, int simple_review_id ) {
+		
+		System.out.println("음식점 아이디 : " + restaurant_id + "리뷰 아이디" + simple_review_id);
+		
+		SimpleReview selectReview = reviewService.selectOne(simple_review_id);
+		
+		SimpleReviewScore selectReviewScore = new SimpleReviewScore();
+		selectReviewScore = reviewService.selectOneScore(selectReview.getSimple_review_score_id());
+		
+		Map<String, Integer> dataMap = new HashMap<>();
+		dataMap.put("total_score", selectReviewScore.getTotal_score());
+		dataMap.put("restaurant_id", restaurant_id);
+		
+		reviewService.delete(selectReview, dataMap);
+	}
+
 }
