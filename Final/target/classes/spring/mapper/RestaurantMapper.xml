@@ -290,10 +290,11 @@
 				and discount_savemoney = true
 			</if>	
 			
-			<!-- 중복된 음식점 1곳만 나오게 하기 -->
+			<!-- 중복된 음식점 1곳만 나오게 하기
 			<if test = "menu_type != null || menu_price != null">
 				group by restaurant_id
 			</if>
+			 -->
 		</where>	
 	</select>
 	
