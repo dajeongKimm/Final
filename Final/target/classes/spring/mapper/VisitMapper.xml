@@ -15,29 +15,44 @@
 	
 	<!-- 방문한곳 읽기-->
 	<select id="visitSelect" parameterType="visitview" resultType="visitview">
-		select distinct restaurant_id ,restaurant_mainimage, restaurant_name, sum_score, allcount, address_dong, menu_type, member_id, url from visit_view 
+		select * from visit_view where visit_id 
+		in (select max(visit_id) 
+		from visit_view 
 		where member_id = #{member_id}
+		group by restaurant_id) 
 		order by visit_id desc
-		limit 0,5
-		
+		limit 0,5;
 	</select>
 	
 	<!-- 안드로이드 버전 -->
 	<select id="visit" parameterType="String" resultType="visitview">
-		select distinct restaurant_id ,restaurant_mainimage, restaurant_name, sum_score, allcount, address_dong, menu_type, member_id, url from visit_view 
+		select * from visit_view where visit_id 
+		in (select max(visit_id) 
+		from visit_view 
 		where member_id = #{member_id}
+		group by restaurant_id) 
 		order by visit_id desc
-		limit 0,5
+		limit 0,5;
 	</select>
 	
 	<!-- 
 	<insert id="visitInsert" parameterType="visit">
+	
 		insert into visit
 		(member_id, restaurant_id, url)
 		values (#{member_id},#{restaurant_id},#{url})
 	</insert>
 	
 	<select id="visitSelect" parameterType="visitview" resultType="visitview">
+	select * from visit_view where visit_id 
+		in (select max(visit_id) 
+		from visit_view 
+		where member_id = #{member_id}
+		group by restaurant_id) 
+		order by visit_id 
+		limit 0,5;
+		
+		
 		select * from visit_view 
 		where member_id = #{member_id}
 		group by restaurant_id
