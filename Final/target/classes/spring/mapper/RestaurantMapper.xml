@@ -229,7 +229,10 @@
 	
 	<!-- 검색필터 -->
 	<select id="filter" parameterType="filterview" resultType="filterview">
-		select * from filter_view
+		select distinct restaurant_id, restaurant_mainimage, restaurant_name, restaurant_description, menu_type, map_coordinate_lat, map_coordinate_long, read_count,
+				sum_score, allcount, service_kidszon, service_pet, service_wipi, service_reservation, service_takeout, service_parking, service_toilet,  service_delivery,
+				discount_coupon,  discount_mobile,  discount_savemoney  
+		from filter_view
 		<where> 
 			<!-- 음식종류 검사 -->
 			<if test= "menu_type != null">
