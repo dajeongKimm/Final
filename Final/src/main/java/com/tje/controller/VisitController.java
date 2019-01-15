@@ -23,11 +23,13 @@ public class VisitController {
 	public String visitInsert(Model model, VisitView visitView, HttpSession session) {
 		
 		Member loginMember = (Member)session.getAttribute("loginmember");
-		String member_id = loginMember.getMember_id();
+		if ( loginMember != null) {
+			String member_id = loginMember.getMember_id();
 		
-		// 여기도 로그인된 아이디값 가져와야됨.
-		visitView.setMember_id(member_id);
-		model.addAttribute("visitLog", service.visitSelect(visitView));
+			// 여기도 로그인된 아이디값 가져와야됨.
+			visitView.setMember_id(member_id);
+			model.addAttribute("visitLog", service.visitSelect(visitView));
+		}
 		
 		return "visit/visit";
 	}
